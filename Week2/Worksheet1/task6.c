@@ -9,8 +9,9 @@ int main()
 
     if (num1%2 == 0)
     {
-        printf("even");
+        printf("even\n");
     }
-    printf ("odd");
+    else
+        printf ("odd\n");
     return 0;
 }
