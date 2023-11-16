@@ -91,7 +91,7 @@ These should still be relatively simple, but you may need to use the math librar
 To compile with the math library you need to include `-lm` at the end of your compilation line!
 
 ```bash
-gcc utilities.h code.c -o ironCalc -lm
+gcc utilities.h code.c -o i ronCalc -lm
 ```
 
 ### G: Generate a graph of your iron levels

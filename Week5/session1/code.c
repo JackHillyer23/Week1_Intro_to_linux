@@ -23,6 +23,10 @@ int main()
     float min = 0;
     float max = 0;
     char month[4];
+    float range = 0;
+    float SD = 0;
+    float median = 0;
+    float tempArray[400];
 
     while (1)
     {
@@ -93,6 +97,18 @@ int main()
 
         case 'F':
         case 'f':
+            max = find_highest(daily_readings, counter);
+            min = find_lowest(daily_readings, counter);
+            range = max - min;
+            printf("The range of you blood iron levels is: %.2f\n", range);
+            SD = standardDeviation(daily_readings, counter);
+            printf("The standard deviation of you blood iron levels is: %f\n", SD);
+            for (int i=0; i<counter; i++){
+                tempArray[i]= daily_readings[i]. bloodIron;
+            }
+            
+            median = medianCalc(tempArray, counter);
+            printf("The median of you blood iron levels is: %f\n", median);
             return 0;
             break;
 

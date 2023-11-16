@@ -167,3 +167,73 @@ void monthly_iron(reading* dataArray, int numReadings, char month [4])
         
     } 
 }
+int records = 0;
+float sqrTotal = 0;
+float normalTotal = 0;
+float finalTotal = 0;
+float standardDeviation (reading* dataArray, int numReadings){
+    for (int i=0; i<numReadings; i++){
+        sqrTotal += pow(dataArray[i].bloodIron, 2);
+        normalTotal += dataArray[i].bloodIron;
+        records += 1;
+    }
+    sqrTotal = sqrTotal/records;
+    normalTotal = normalTotal/records;
+    normalTotal = pow(normalTotal, 2);
+    finalTotal = sqrt(sqrTotal-normalTotal);
+    return finalTotal;
+}
+
+// bubble sort for median
+// int tempArray[400];
+// int temp;
+// int arrayValues(reading* dataArray, int numReadings){
+//     for (int i=0; i<numReadings; i++){
+//         tempArray[i]= dataArray[i]. bloodIron;
+//     }    
+//     return tempArray;
+// }
+
+// // Swap function 
+// void swap(int tempArray, int i, int j) 
+// { 
+//     temp = tempArray[i]; 
+//     tempArray[i] = tempArray[j]; 
+//     tempArray[j] = temp; 
+// } 
+  
+// // A function to implement bubble sort 
+// int bubbleSort(int tempArray, int n) 
+// { 
+//     int i, j; 
+//     for (i = 0; i < n - 1; i++) 
+  
+//         // Last i elements are already 
+//         // in place 
+//         for (j = 0; j < n - i - 1; j++) 
+//             if (tempArray[j] > tempArray[j + 1]) 
+//                 swap(tempArray, j, j + 1); 
+//     return tempArray;
+// } 
+
+// float median(int tempArray, int numReadings){
+//     tempArray = arrayValues(tempArray);
+//     tempArray = bubbleSort(tempArray);
+//     if (numReadings%2 = 0){
+//         return tempArray[numReadings/2];
+//     }
+//     return tempArray [(numReadings+1)/2];
+// }
+
+int cmpfunc (const void * a, const void * b) {
+   return ( *(float*)a - *(float*)b );
+}
+float medianCalc(float *tempArray, int numReadings){
+    qsort(tempArray, numReadings, sizeof(float), cmpfunc);
+    for (int i=0; i<numReadings; i++){
+    }
+    if (numReadings%2 == 0){
+        return tempArray[numReadings/2];
+    }
+    return tempArray [(numReadings+1)/2];
+}
