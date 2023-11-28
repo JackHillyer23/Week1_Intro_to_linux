@@ -7,6 +7,9 @@
 
 // Define any additional variables here
 // Global variables for filename and FITNESS_DATA array
+char choice;
+char line[buffer_size];
+char filename[buffer_size];
 
 
 // This is your helper function. Do not change it in any way.
@@ -42,7 +45,7 @@ void tokeniseRecord(const char *input, const char *delimiter,
 
 // Complete the main function
 int main() {
-    printf("Menu Options:\n")
+    printf("Menu Options:\n");
     printf("A: Specify the filename to be imported\n");                       
     printf("B: Display the total number of records in the file\n");                    
     printf("C: Find the date and time of the timeslot with the fewest steps\n");                     
@@ -50,7 +53,7 @@ int main() {
     printf("E: Find the mean step count of all the records in the file\n");       
     printf("F: Find the longest continuous period where the step count is above 500 steps\n");        
     printf("Q: Quit\n");
-    printf("Enter Choice: ")
+    printf("Enter Choice: ");
 
     choice = getchar();
 
@@ -62,53 +65,53 @@ int main() {
     {
     case 'A':
     case 'a':
-        for (int i = 0; i < counter; i++)
-        {
-            printf("%s - Blood iron: %.1f\n", daily_readings[i].date, daily_readings[i].bloodIron);
-        }
+
+        // get filename from user
+        printf("Please enter the name of the data file: ");
+        FILE *input = open_file(filename, "r");
         break;
 
-    case 'B':
-    case 'b':
-        mean = find_mean(daily_readings, counter);
-        printf("Your average blood iron was %.2f\n", mean);
-        break;
+    // case 'B':
+    // case 'b':
+    //     mean = find_mean(daily_readings, counter);
+    //     printf("Your average blood iron was %.2f\n", mean);
+    //     break;
 
-    case 'C':
-    case 'c':
-        min = find_lowest(daily_readings, counter);
-        printf("Your lowest level of blood iron was %.2f\n", min);
-        break;
+    // case 'C':
+    // case 'c':
+    //     min = find_lowest(daily_readings, counter);
+    //     printf("Your lowest level of blood iron was %.2f\n", min);
+    //     break;
 
-    case 'D':
-    case 'd':
-        max = find_highest(daily_readings, counter);
-        printf("Your highest level of blood iron was %.2f\n", max);
-        break;
+    // case 'D':
+    // case 'd':
+    //     max = find_highest(daily_readings, counter);
+    //     printf("Your highest level of blood iron was %.2f\n", max);
+    //     break;
 
-    case 'E':
-    case 'e':
-        printf("Please enter the month you wish to look at (in the form JAN, FEB etc): ");
-        scanf("%s", month);
-        monthly_iron(daily_readings, counter, month);
-        break;
+    // case 'E':
+    // case 'e':
+    //     printf("Please enter the month you wish to look at (in the form JAN, FEB etc): ");
+    //     scanf("%s", month);
+    //     monthly_iron(daily_readings, counter, month);
+    //     break;
 
-    case 'F':
-    case 'f':
-        max = find_highest(daily_readings, counter);
-        min = find_lowest(daily_readings, counter);
-        range = max - min;
-        printf("The range of you blood iron levels is: %.2f\n", range);
-        SD = standardDeviation(daily_readings, counter);
-        printf("The standard deviation of you blood iron levels is: %f\n", SD);
-        for (int i=0; i<counter; i++){
-            tempArray[i]= daily_readings[i]. bloodIron;
-        }
+    // case 'F':
+    // case 'f':
+    //     max = find_highest(daily_readings, counter);
+    //     min = find_lowest(daily_readings, counter);
+    //     range = max - min;
+    //     printf("The range of you blood iron levels is: %.2f\n", range);
+    //     SD = standardDeviation(daily_readings, counter);
+    //     printf("The standard deviation of you blood iron levels is: %f\n", SD);
+    //     for (int i=0; i<counter; i++){
+    //         tempArray[i]= daily_readings[i]. bloodIron;
+    //     }
         
-        median = medianCalc(tempArray, counter);
-        printf("The median of you blood iron levels is: %f\n", median);
-        return 0;
-        break;
+    //     median = medianCalc(tempArray, counter);
+    //     printf("The median of you blood iron levels is: %f\n", median);
+    //     return 0;
+    //     break;
 
     case 'Q':
     case 'q':
@@ -117,7 +120,7 @@ int main() {
 
     // if they type anything else:
     default:
-        printf("Invalid choice\n");
+        printf("Invalid choice. Try again\n");
         break;
     }
 }

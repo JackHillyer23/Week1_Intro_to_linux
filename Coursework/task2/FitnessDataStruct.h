@@ -2,7 +2,12 @@
 #ifndef FITNESS_DATA_STRUCT_H
 #define FITNESS_DATA_STRUCT_H
 
+
 #include <stdio.h>
+
+#define buffer_size 100
+
+
 
 // Define an appropriate struct
 typedef struct {
@@ -12,6 +17,18 @@ typedef struct {
 } FITNESS_DATA;
 
 // Helper function prototypes
+
+FILE *open_file(char *filename, char *mode)
+{
+    FILE *input = fopen(filename, "r");
+    if (!input)
+    {
+        printf("Error: File could not be opened\n");
+        return NULL;
+    }
+    return input;
+}
+
 void tokeniseRecord(const char *input, const char *delimiter, char *date, char *time, char *steps);
 
 #endif // FITNESS_DATA_STRUCT_H
