@@ -10,6 +10,8 @@
 char choice;
 char line[buffer_size];
 char filename[buffer_size];
+int counter = 0;
+
 
 
 // This is your helper function. Do not change it in any way.
@@ -45,6 +47,9 @@ void tokeniseRecord(const char *input, const char *delimiter,
 
 // Complete the main function
 int main() {
+    int counter = 0;
+    FITNESS_DATA stepsArray[200];
+
     printf("Menu Options:\n");
     printf("A: Specify the filename to be imported\n");                       
     printf("B: Display the total number of records in the file\n");                    
@@ -68,14 +73,24 @@ int main() {
 
         // get filename from user
         printf("Please enter the name of the data file: ");
+        fgets(line, buffer_size, stdin);
+        sscanf(line, " %s ", filename);
         FILE *input = open_file(filename, "r");
+        while (fgets(line, buffer_size, input))
+        {
+            // split up the line and store it in the right place
+            tokeniseRecord(line, ",",stepsArray[counter].date, stepsArray[counter].time, stepsArray[counter].steps);
+            counter++;
+        }
+        fclose(input);
+        printf("File successfully loaded.\n");
+        main();
         break;
 
-    // case 'B':
-    // case 'b':
-    //     mean = find_mean(daily_readings, counter);
-    //     printf("Your average blood iron was %.2f\n", mean);
-    //     break;
+    case 'B':
+    case 'b':
+        printf("Total records: %d\n",counter+1);
+        break;
 
     // case 'C':
     // case 'c':
@@ -120,10 +135,11 @@ int main() {
 
     // if they type anything else:
     default:
-        printf("Invalid choice. Try again\n");
-        break;
+        printf("Invalid choice. Try again.\n");
+        break;  
     }
 }
+
 
 
 

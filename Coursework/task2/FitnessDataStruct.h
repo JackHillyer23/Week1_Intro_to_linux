@@ -23,7 +23,7 @@ FILE *open_file(char *filename, char *mode)
     FILE *input = fopen(filename, "r");
     if (!input)
     {
-        printf("Error: File could not be opened\n");
+        printf("Error: Could not find or open the file.\n");
         return NULL;
     }
     return input;
