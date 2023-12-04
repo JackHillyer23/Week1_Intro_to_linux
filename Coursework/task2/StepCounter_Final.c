@@ -48,7 +48,8 @@ void tokeniseRecord(const char *input, const char *delimiter,
 // Complete the main function
 int main() {
     int counter = 0;
-    FITNESS_DATA stepsArray[200];
+    FITNESS_DATA stepsArray[counter];
+    
 
     printf("Menu Options:\n");
     printf("A: Specify the filename to be imported\n");                       
@@ -76,12 +77,27 @@ int main() {
         fgets(line, buffer_size, stdin);
         sscanf(line, " %s ", filename);
         FILE *input = open_file(filename, "r");
-        while (fgets(line, buffer_size, input))
-        {
-            // split up the line and store it in the right place
-            tokeniseRecord(line, ",",stepsArray[counter].date, stepsArray[counter].time, stepsArray[counter].steps);
-            counter++;
+        while (fgets(line, buffer_size, input) != NULL) {
+            counter ++;
         }
+        fclose(input);
+
+
+        FITNESS_DATA stepsArray[counter];
+        char date[11];   // I kept finding errors saying the variables in the tokenise function were undeclared so decided to declare them here first
+        char time[6];
+        char steps[10];
+
+
+        input = open_file(filename, "r");
+        for (int i = 0; i < counter; i++) {  // This section loops through the files and splits each line before assinging it to the stepsArray
+            fgets(line, buffer_size, input);
+            tokeniseRecord(line, ",", date, time, steps); 
+            strcpy(stepsArray[i].date, date);
+            strcpy(stepsArray[i].time, time);
+            stepsArray[i].steps = atoi(steps);
+
+    }
         fclose(input);
         printf("File successfully loaded.\n");
         main();
