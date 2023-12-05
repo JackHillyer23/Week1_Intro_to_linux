@@ -47,114 +47,137 @@ void tokeniseRecord(const char *input, const char *delimiter,
 
 // Complete the main function
 int main() {
+
+    //Variables defined for switch cases
     int counter = 0;
-    FITNESS_DATA stepsArray[counter];
-    
-
-    printf("Menu Options:\n");
-    printf("A: Specify the filename to be imported\n");                       
-    printf("B: Display the total number of records in the file\n");                    
-    printf("C: Find the date and time of the timeslot with the fewest steps\n");                     
-    printf("D: Find the date and time of the timeslot with the largest number of steps\n");                   
-    printf("E: Find the mean step count of all the records in the file\n");       
-    printf("F: Find the longest continuous period where the step count is above 500 steps\n");        
-    printf("Q: Quit\n");
-    printf("Enter Choice: ");
-
-    choice = getchar();
-
-    while (getchar() != '\n');
-
-
-    // switch statement to control the menu.
-    switch (choice)
-    {
-    case 'A':
-    case 'a':
-
-        // get filename from user
-        printf("Please enter the name of the data file: ");
-        fgets(line, buffer_size, stdin);
-        sscanf(line, " %s ", filename);
-        FILE *input = open_file(filename, "r");
-        while (fgets(line, buffer_size, input) != NULL) {
-            counter ++;
-        }
-        fclose(input);
-
-
-        FITNESS_DATA stepsArray[counter];
-        char date[11];   // I kept finding errors saying the variables in the tokenise function were undeclared so decided to declare them here first
-        char time[6];
-        char steps[10];
-
-
-        input = open_file(filename, "r");
-        for (int i = 0; i < counter; i++) {  // This section loops through the files and splits each line before assinging it to the stepsArray
-            fgets(line, buffer_size, input);
-            tokeniseRecord(line, ",", date, time, steps); 
-            strcpy(stepsArray[i].date, date);
-            strcpy(stepsArray[i].time, time);
-            stepsArray[i].steps = atoi(steps);
-
-    }
-        fclose(input);
-        printf("File successfully loaded.\n");
-        main();
-        break;
-
-    case 'B':
-    case 'b':
-        printf("Total records: %d\n",counter+1);
-        break;
-
-    // case 'C':
-    // case 'c':
-    //     min = find_lowest(daily_readings, counter);
-    //     printf("Your lowest level of blood iron was %.2f\n", min);
-    //     break;
-
-    // case 'D':
-    // case 'd':
-    //     max = find_highest(daily_readings, counter);
-    //     printf("Your highest level of blood iron was %.2f\n", max);
-    //     break;
-
-    // case 'E':
-    // case 'e':
-    //     printf("Please enter the month you wish to look at (in the form JAN, FEB etc): ");
-    //     scanf("%s", month);
-    //     monthly_iron(daily_readings, counter, month);
-    //     break;
-
-    // case 'F':
-    // case 'f':
-    //     max = find_highest(daily_readings, counter);
-    //     min = find_lowest(daily_readings, counter);
-    //     range = max - min;
-    //     printf("The range of you blood iron levels is: %.2f\n", range);
-    //     SD = standardDeviation(daily_readings, counter);
-    //     printf("The standard deviation of you blood iron levels is: %f\n", SD);
-    //     for (int i=0; i<counter; i++){
-    //         tempArray[i]= daily_readings[i]. bloodIron;
-    //     }
+    int i = 0;
+    int min = 0;
+    int max = 0;
+    int mean = 0;
+    //char stepsChar[10];
+    FITNESS_DATA stepsArray[200];
+    int completeActions = 0; //loop for ensuring correct flow of data until the program is finished
+    while (completeActions<2){
         
-    //     median = medianCalc(tempArray, counter);
-    //     printf("The median of you blood iron levels is: %f\n", median);
-    //     return 0;
-    //     break;
 
-    case 'Q':
-    case 'q':
-        return 0;
-        break;
+        printf("Menu Options:\n");
+        printf("A: Specify the filename to be imported\n");                       
+        printf("B: Display the total number of records in the file\n");                    
+        printf("C: Find the date and time of the timeslot with the fewest steps\n");                     
+        printf("D: Find the date and time of the timeslot with the largest number of steps\n");                   
+        printf("E: Find the mean step count of all the records in the file\n");       
+        printf("F: Find the longest continuous period where the step count is above 500 steps\n");        
+        printf("Q: Quit\n");
+        printf("Enter Choice: ");
 
-    // if they type anything else:
-    default:
-        printf("Invalid choice. Try again.\n");
-        break;  
+        choice = getchar();
+
+        while (getchar() != '\n');
+
+
+        // switch statement to control the menu.
+        switch (choice)
+        {
+        case 'A':
+        case 'a':
+
+            // get filename from user
+            printf("Please enter the name of the data file: ");
+            fgets(line, buffer_size, stdin);
+            sscanf(line, " %s ", filename);
+            FILE *input = open_file(filename, "r");
+            if (input == NULL){ //Checking for a valid file
+                printf("Error: Could not find or open the file.\n");
+                return 1;
+            }
+            while (fgets(line, buffer_size, input) != NULL) { // Gets the total number of records of the file
+                counter ++;
+            }
+            fclose(input);
+
+            input = open_file(filename, "r");
+            {
+                // split up the line and store it in the right place in the steps array
+                char stepsChar[10];
+                tokeniseRecord(line, ",", stepsArray[i].date, stepsArray[i].time, stepsChar);
+                stepsArray[i].steps= atoi(stepsChar);
+                i++;
+            }
+
+        
+            fclose(input);
+            printf("File successfully loaded.\n");
+            completeActions += 1;
+            break;
+
+        case 'B':
+        case 'b':
+            if (completeActions != 1){ //ensures file has been inputted
+                printf("No file has been inputted yet\n");
+                break;
+            } else{
+                printf("Total records: %d\n",counter); // Returns number of records
+                break;
+            }
+            
+
+        case 'C':
+        case 'c':
+            if (completeActions != 1){//ensures file has been inputted
+                printf("No file has been inputted yet\n");
+                break;
+            } else{
+                min = find_lowest(stepsArray, counter);
+                printf("Fewest steps: %s %s\n", stepsArray[min].date, stepsArray[min].time); //returns date and time of fewest steps 
+                break;
+            }
+
+        case 'D':
+        case 'd':
+            if (completeActions != 1){//ensures file has been inputted
+                printf("No file has been inputted yet\n");
+                break;
+            } else{
+                max = find_highest(stepsArray, counter);
+                printf("Largest steps: %s %s\n", stepsArray[max].date, stepsArray[max].time);//returns date and time of most steps 
+                break;
+            }
+
+        case 'E':
+        case 'e':
+            if (completeActions != 1){//ensures file has been inputted
+                printf("No file has been inputted yet\n");
+                break;
+            } else{
+                mean = find_mean(stepsArray, counter);
+                printf("Mean step count: %d\n", mean);//returns mean steps in the file 
+                break;
+            }
+
+        case 'F':
+        case 'f':
+            if (completeActions != 1){//ensures file has been inputted
+                printf("No file has been inputted yet\n");
+                break;
+            } else{
+                timeOver(stepsArray, counter);
+                break;
+            }
+            
+
+        case 'Q':
+        case 'q':
+            return 0;
+            break;
+
+        // if they type anything else:
+        default:
+            printf("Invalid choice. Try again.\n");
+            break; 
+        } 
     }
 }
+
 
 
 
