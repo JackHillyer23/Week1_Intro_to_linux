@@ -52,11 +52,11 @@ int main() {
     FitnessData stepsArray[counter];
 
     input = fopen(filename, "r");
+    int i = 0;
     while (fgets(line, buffer_size, input))
     {
-        for (int i=0; i<counter; i++)
-            // split up the line and store it in the right place in the steps array
-            tokeniseRecord(line, delimiter, stepsArray[i].date, stepsArray[i].time, &stepsArray[i].steps);
+        tokeniseRecord(line, ',', stepsArray[i].date, stepsArray[i].time, &stepsArray[i].steps);
+        i++;
     }
 
 

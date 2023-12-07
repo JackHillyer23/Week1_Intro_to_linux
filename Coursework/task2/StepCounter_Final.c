@@ -96,6 +96,8 @@ int main() {
             fclose(input);
 
             input = open_file(filename, "r");
+            int i = 0;
+            while (fgets(line, buffer_size, input))
             {
                 // split up the line and store it in the right place in the steps array
                 char stepsChar[10];
