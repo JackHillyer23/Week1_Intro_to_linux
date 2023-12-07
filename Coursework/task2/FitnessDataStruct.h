@@ -61,14 +61,20 @@ int find_highest(FITNESS_DATA* dataArray, int numReadings)
     return (record);
 }
 
+int roundF(float num){
+    return (int)(num+0.5);
+}
 
 int find_mean(FITNESS_DATA* dataArray, int numReadings)
 {
-    int total = 0;
+    float total = 0;
     for (int i=0; i<numReadings; i++){
         total += dataArray[i].steps;
-    } 
-    return (total/numReadings);
+    }
+    float mean = total/numReadings;
+    int result = roundF(mean);
+    return result;
+    
 }
 
 void timeOver(FITNESS_DATA* dataArray, int numReadings)
