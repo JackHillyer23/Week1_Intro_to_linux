@@ -57,7 +57,7 @@ int main() {
     //char stepsChar[10];
     FITNESS_DATA stepsArray[200];
     int completeActions = 0; //loop for ensuring correct flow of data until the program is finished
-    while (completeActions<2){
+    while (1){
         
 
         printf("Menu Options:\n");
