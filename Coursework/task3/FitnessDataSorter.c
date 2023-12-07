@@ -29,13 +29,14 @@ void tokeniseRecord(char *record, char delimiter, char *date, char *time, int *s
 
 
 int main() {
+    //global variables
     int counter = 0;
     int buffer_size = 100;
     char line[buffer_size];
     char filename[buffer_size];
     char delimiter = ',';
     
-
+    //Retieving input of a file from the user
     printf("Enter Filename: ");
     fgets(line, buffer_size, stdin);
     sscanf(line, " %s ", filename);
@@ -49,19 +50,27 @@ int main() {
     }
     fclose(input);
 
-    FitnessData stepsArray[counter];
+    FitnessData stepsArray[counter]; // initialises array
 
     input = fopen(filename, "r");
     int i = 0;
-    while (fgets(line, buffer_size, input))
+    while (fgets(line, buffer_size, input)) // This nested section of code tokenises and ensures data is of a valid format
     {
+        strcpy(stepsArray[i].date, "");
+        strcpy(stepsArray[i].time, "");
+        stepsArray[i].steps = 0;
         tokeniseRecord(line, ',', stepsArray[i].date, stepsArray[i].time, &stepsArray[i].steps);
+        if (stepsArray[i].date == "" || stepsArray[i].time == "" || stepsArray[i].steps == 0){
+            printf("Invalid data in file.\n");
+            return 1;
+        }
         i++;
     }
 
 
     fclose(input);
 
+    //Bubble sort in descending order
     FitnessData temp[1];
     for (int i = 0; i<counter; i++){
         for(int j = 0; j<counter-1; j++){
@@ -75,10 +84,10 @@ int main() {
     char *newFile = filename;
     char *fileEnding = ".tsv";
     
-    FILE *output = fopen(strcat(newFile, fileEnding), "w");
+    FILE *output = fopen(strcat(newFile, fileEnding), "w");//Opening the new file in write mode with concantenated filename and .tsv
     for (int i = 0; i<counter; i++){
         fprintf(output,"%s\t%s\t%d\n",stepsArray[i].date, stepsArray[i].time, stepsArray[i].steps);
     }
     printf("Data sorted and written to %s\n", newFile);
-
+    return 0;
 }

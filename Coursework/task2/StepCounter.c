@@ -162,7 +162,7 @@ int main() {
                 printf("No file has been inputted yet\n");
                 break;
             } else{
-                timeOver(stepsArray, counter);
+                timeOver(stepsArray, counter); // function determines longest period ofsteps over 500
                 break;
             }
             
