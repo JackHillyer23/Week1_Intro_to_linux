@@ -114,7 +114,7 @@ int main() {
 
         case 'B':
         case 'b':
-            if (completeActions != 1){ //ensures file has been inputted
+            if (completeActions < 1){ //ensures file has been inputted
                 printf("No file has been inputted yet\n");
                 break;
             } else{
@@ -125,7 +125,7 @@ int main() {
 
         case 'C':
         case 'c':
-            if (completeActions != 1){//ensures file has been inputted
+            if (completeActions < 1){//ensures file has been inputted
                 printf("No file has been inputted yet\n");
                 break;
             } else{
@@ -136,7 +136,7 @@ int main() {
 
         case 'D':
         case 'd':
-            if (completeActions != 1){//ensures file has been inputted
+            if (completeActions < 1){//ensures file has been inputted
                 printf("No file has been inputted yet\n");
                 break;
             } else{
@@ -147,7 +147,7 @@ int main() {
 
         case 'E':
         case 'e':
-            if (completeActions != 1){//ensures file has been inputted
+            if (completeActions < 1){//ensures file has been inputted
                 printf("No file has been inputted yet\n");
                 break;
             } else{
@@ -158,7 +158,7 @@ int main() {
 
         case 'F':
         case 'f':
-            if (completeActions != 1){//ensures file has been inputted
+            if (completeActions < 1){//ensures file has been inputted
                 printf("No file has been inputted yet\n");
                 break;
             } else{
@@ -179,6 +179,7 @@ int main() {
         } 
     }
 }
+
 
 
 

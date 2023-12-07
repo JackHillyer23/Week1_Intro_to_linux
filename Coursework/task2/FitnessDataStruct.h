@@ -78,26 +78,38 @@ void timeOver(FITNESS_DATA* dataArray, int numReadings)
     int tempEnd = 0;
     int end = 0;
     int total = 0;
-    int tempTotal = 0;
+    int j = 0;
     for (int i=0; i<numReadings; i++){
         if (dataArray[i].steps>500){
+            int tempTotal = 0;
             tempStart = i;
-            for (int j = i; j<numReadings; j++){
-                if (dataArray[j].steps>500){
-                    tempTotal += 1;
-                } else{
-                    tempEnd = j-1;
-                    if (total<tempTotal){
-                        total = tempTotal;
-                        start = tempStart;
-                        end = tempEnd;
-                        break;
-                    }else{
-                        break;
-                    }
-                    
-                }
+            while (dataArray[i].steps>500){
+                tempTotal += 1;
+                i++;
             }
+            tempEnd = i-1;
+            if (total<tempTotal){
+                total = tempTotal;
+                start = tempStart;
+                end = tempEnd;
+            }
+
+            // for (int j = i; j<numReadings; j++){
+            //     if (dataArray[j].steps>500){
+            //         tempTotal += 1;
+            //     } else{
+            //         tempEnd = j-1;
+            //         if (total<tempTotal){
+            //             total = tempTotal;
+            //             start = tempStart;
+            //             end = tempEnd;
+            //             break;
+            //         }else{
+            //             break;
+            //         }
+                    
+            //     }
+            // }
         }
     }
     printf("Longest period start: %s %s\n",dataArray[start].date, dataArray[start].time);

@@ -36,7 +36,7 @@ int main() {
     char delimiter = ',';
     
 
-    printf("Please enter the name of the data file: ");
+    printf("Enter Filename: ");
     fgets(line, buffer_size, stdin);
     sscanf(line, " %s ", filename);
     FILE *input = fopen(filename, "r");
@@ -65,7 +65,7 @@ int main() {
     FitnessData temp[1];
     for (int i = 0; i<counter; i++){
         for(int j = 0; j<counter-1; j++){
-            if (stepsArray[j].steps>stepsArray[j+1].steps){
+            if (stepsArray[j].steps<stepsArray[j+1].steps){
                 temp[0] = stepsArray[j];
                 stepsArray[j]= stepsArray[j+1];
                 stepsArray[j+1] = temp[0];
@@ -79,5 +79,6 @@ int main() {
     for (int i = 0; i<counter; i++){
         fprintf(output,"%s\t%s\t%d\n",stepsArray[i].date, stepsArray[i].time, stepsArray[i].steps);
     }
+    printf("Data sorted and written to %s\n", newFile);
 
 }
